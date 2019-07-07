@@ -1,12 +1,15 @@
 package _02_Pixel_Art;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,7 +17,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class ColorSelectionPanel extends JPanel implements MouseListener, ChangeListener{
+public class ColorSelectionPanel extends JPanel implements MouseListener, ChangeListener, ActionListener{
 	private static final long serialVersionUID = 1L;
 	
 	public static final int MAX_COLOR = 256;
@@ -22,8 +25,12 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 	private JSlider rSlider;
 	private JSlider gSlider;
 	private JSlider bSlider;
-	
+			JButton bigger;
+			JButton smaller;
 	private Color color;
+	
+	public int getBig=0;
+	public int getSmoll=0;
 	
 	private int r = 0;
 	private int g = 0;
@@ -36,6 +43,8 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		rSlider = new JSlider(JSlider.VERTICAL);
 		gSlider = new JSlider(JSlider.VERTICAL);
 		bSlider = new JSlider(JSlider.VERTICAL);
+		bigger = new JButton();
+		smaller= new JButton();
 		
 		rSlider.setMinimum(0);
 		rSlider.setMaximum(MAX_COLOR - 1);
@@ -50,6 +59,8 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		rSlider.addChangeListener(this);
 		gSlider.addChangeListener(this);
 		bSlider.addChangeListener(this);
+		bigger.addActionListener(this);
+		smaller.addActionListener(this);
 		
 		addMouseListener(this);
 		
@@ -124,5 +135,24 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		
 		colorLabel.setIcon(new ImageIcon(colorImage));
 		add(colorLabel);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton buttonPressed = (JButton)(e.getSource());
+		if(buttonPressed.equals(bigger)) {
+			getBig(); 
+		} else {
+			getSmall();
+		}
+		
+	}
+	
+	public void getBig() {
+		getBig+=1;
+	}
+	
+	public void getSmall() {
+	getSmoll+=1;
 	}
 }
