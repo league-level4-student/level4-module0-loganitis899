@@ -31,8 +31,8 @@ Cell[][] cells;
 		//2. Calculate the cell size.
 		cellSize=10;
 		
-		
-		//3. Initialize the cell array to the appropriate size.
+		cells=new Cell[50][50];
+
 		for(int i=0;i<cells.length;i++) {
 			for(int j=0; j<cells[i].length;j++) {
 				cells[i][j]= new Cell(i*cellSize,j*cellSize,cellSize);
@@ -47,6 +47,7 @@ Cell[][] cells;
 	}
 	
 	public void randomizeCells() {
+		System.out.println(cells.length);
 		for(int i=0;i<cells.length;i++) {
 			for(int j=0;j<cells[i].length;j++) {
 				Random rand = new Random();
@@ -91,7 +92,7 @@ Cell[][] cells;
 		//6. Iterate through the cells and draw them all
 		for(int i=0;i<cells.length;i++) {
 			for(int j=0; j<cells[i].length;j++) {
-				g.drawRect(i*cellSize, j*cellSize, cellSize, cellSize);
+				cells[i][j].draw(g);
 			}
 			
 			}
@@ -109,13 +110,18 @@ Cell[][] cells;
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		for(int i=0;i<cells.length;i++) {
 			for(int j=0; j<cells[i].length;j++) {
+				livingNeighbors[i][j]=getLivingNeighbors(i,j);
 				
 			}
 			}
 		
 		//8. check if each cell should live or die
 	
-		
+		for(int i=0;i<cells.length;i++) {
+			for(int j=0; j<cells[i].length;j++) {
+				cells[i][j].liveOrDie(livingNeighbors[i][j]);
+			}
+			}
 		
 		
 		repaint();
@@ -126,8 +132,33 @@ Cell[][] cells;
 	//   living neighbors there are of the 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
-		
-		return 0;
+		int total=0;
+		if(cells[x-1][y].isAlive) {
+			total+=1;
+		}
+		if(cells[x+1][y].isAlive) {
+			total+=1;
+		}
+		if(cells[x-1][y-1].isAlive) {
+			total+=1;
+		}
+		if(cells[x-1][y+1].isAlive) {
+			total+=1;
+		}
+		if(cells[x+1][y+1].isAlive) {
+			total+=1;
+		}
+		if(cells[x+1][y-1].isAlive) {
+			total+=1;
+		}
+		if(cells[x][y+1].isAlive) {
+			total+=1;
+		}
+		if(cells[x][y-1].isAlive) {
+			total+=1;
+		}
+		return total;
+			
 	}
 
 	@Override
