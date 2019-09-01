@@ -48,6 +48,13 @@ public class Cell {
 			g.drawLine((x * size) + X_MARGIN, (y * size) + Y_MARGIN, (x * size) + X_MARGIN, (y * size) + size + Y_MARGIN);
 		}
 	}
+	public boolean getVisited() {
+		if(visited) {
+			return true;
+		} else {
+		return false; 
+	}
+	}
 
 	public int getX() {
 		return x;
