@@ -27,15 +27,18 @@ public class MazeDisplay extends JPanel{
 		window.pack();
 		
 		maze = MazeMaker.generateMaze(5, 5);
+		System.out.println(maze);
 		repaint();
 	}
 	
 	@Override
 	public void paintComponent(Graphics g){
+	
 		maze.draw(g);
 	}
 	
 	public static void main(String[] args) {
 		MazeDisplay md = new MazeDisplay();
+		
 	}
 }

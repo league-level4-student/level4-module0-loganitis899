@@ -21,10 +21,10 @@ public class MazeMaker {
 
 		// 4. select a random cell to start
 		Random Randy = new Random();
-		int rand1 = Randy.nextInt(w +1 );
+		int rand1 = Randy.nextInt(w);
 
 		Random Rondy = new Random();
-		int rand2 = Rondy.nextInt(h +1);
+		int rand2 = Rondy.nextInt(h);
 
 		selectNextPath(maze.cells[rand1][rand2]);
 
@@ -35,20 +35,36 @@ public class MazeMaker {
 
 	// 6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
+		
 		// A. mark cell as visited
-		currentCell.hasBeenVisited();
+		currentCell.setBeenVisited(true);
 		// B. check for unvisited neighbors using the cell
 		if (getUnvisitedNeighbors(currentCell).size() >= 1) {
+			
 			Random randy = new Random();
-			int rain = randy.nextInt(getUnvisitedNeighbors(currentCell).size() + 1);
-			uncheckedCells.push(getUnvisitedNeighbors(currentCell).get(rain));
-			removeWalls(currentCell, getUnvisitedNeighbors(currentCell).get(rain));
-			currentCell = getUnvisitedNeighbors(currentCell).get(rain);
-			currentCell.hasBeenVisited();
+			
+			int rain = randy.nextInt(getUnvisitedNeighbors(currentCell).size());
+			
+			Cell randomCell=getUnvisitedNeighbors(currentCell).get(rain);
+			
+			uncheckedCells.push(randomCell);
+			
+			removeWalls(currentCell, randomCell);
+			
+			currentCell = randomCell;
+			
+			currentCell.setBeenVisited(true);
+			
 			selectNextPath(currentCell);
+			
 		} else if (getUnvisitedNeighbors(currentCell).size() == 0) {
+			
 			if (uncheckedCells.size() > 0) {
+				
 				currentCell = uncheckedCells.pop();
+				
+				currentCell.setBeenVisited(true);
+				
 				selectNextPath(currentCell);
 			}
 
@@ -88,7 +104,6 @@ public class MazeMaker {
 
 		if (c1Y == c2Y && c1X > c2X) {
 			c1.setWestWall(false);
-
 		}
 		if(c1Y==c2Y&&c1X<c2X) {
 			c1.setEastWall(false);
@@ -105,11 +120,12 @@ public class MazeMaker {
 	// Any unvisited neighbor of the passed in cell gets added
 	// to the ArrayList
 	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {
+		
 		int cX=c.getX();
 		int cY=c.getY();
 		
 		ArrayList<Cell> unVisited = new ArrayList<Cell>();
-		if(cX+1<=maze.cells.length) {
+		if(cX+1<maze.cells.length) {
 			
 			if(maze.getCell(cX+1, cY).getVisited()==false) {
 			unVisited.add(maze.getCell(cX+1, cY));
@@ -122,7 +138,7 @@ public class MazeMaker {
 		}
 		}
 		
-		if(cY+1<=maze.cells.length) {
+		if(cY+1<maze.cells.length) {
 			
 		
 			if(maze.getCell(cX, cY+1).getVisited()==false) {

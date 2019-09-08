@@ -37,7 +37,12 @@ public class Maze {
 	
 	//4b. This method returns the selected cell.
 	public Cell getCell(int x, int y){
-		return  cells[x][y];
+		if(x<=cells.length-1&&y<=cells.length-1) {
+			return  cells[x][y];
+		}
+		else {
+			return null;
+		}
 	}
 
 	public int getWidth() {
